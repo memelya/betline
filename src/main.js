@@ -4,7 +4,7 @@ const app = document.getElementById('app');
 let currentView = 'dashboard';
 
 // ====== Mock Data ======
-const USER = { bankroll: 10000, totalBets: 47, wins: 28, losses: 17, pushes: 2, roi: 12.4 };
+const USER = { bankroll: 9750, totalBets: 48, wins: 28, losses: 18, pushes: 2, roi: 11.2 };
 
 const BETS = [
   { id: 1, sport: '⚽', league: 'EPL', match: 'Liverpool vs Man City', pick: 'Liverpool (1X2)', odds: 2.45, stake: 200, result: 'win', profit: 490, date: '2026-05-08' },
@@ -13,7 +13,7 @@ const BETS = [
   { id: 4, sport: '⚽', league: 'UCL', match: 'Real Madrid vs Bayern', pick: 'Both Teams to Score', odds: 1.85, stake: 250, result: 'win', profit: 462.5, date: '2026-05-07' },
   { id: 5, sport: '🏀', league: 'NBA', match: 'Warriors vs Nuggets', pick: 'Nuggets -4.5', odds: 2.10, stake: 120, result: 'pending', profit: 0, date: '2026-05-09' },
   { id: 6, sport: '⚽', league: 'Serie A', match: 'Inter vs Milan', pick: 'Over 2.5 Goals', odds: 1.95, stake: 180, result: 'pending', profit: 0, date: '2026-05-09' },
-  { id: 7, sport: '⚽', league: 'EPL', match: 'Sunderland vs Man United', pick: 'Man United Win', odds: 1.85, stake: 250, result: 'pending', profit: 0, date: '2026-05-09' },
+  { id: 7, sport: '⚽', league: 'EPL', match: 'Sunderland 0-0 Man United', pick: 'Man United Win', odds: 1.85, stake: 250, result: 'lose', profit: -250, date: '2026-05-09' },
   { id: 8, sport: '⚽', league: 'EPL', match: 'Man City vs Brentford', pick: 'Man City -1.5', odds: 1.91, stake: 300, result: 'pending', profit: 0, date: '2026-05-09' },
   { id: 9, sport: '🏎️', league: 'F1', match: 'Miami GP', pick: 'Verstappen Win', odds: 1.45, stake: 300, result: 'pending', profit: 0, date: '2026-05-11' },
 ];
@@ -28,7 +28,7 @@ const PREDICTIONS = [
 ];
 
 const LIVE = [
-  { sport: '⚽', league: 'EPL', match: 'Sunderland 0-0 Man United', minute: 10, prediction: 'Man United Win @ 1.85', confidence: 68 },
+  { sport: '⚽', league: 'EPL', match: 'Sunderland 0-0 Man United', minute: 90, prediction: '❌ Прогноз не прошёл. 0-0', confidence: 68 },
   { sport: '⚽', league: 'EPL', match: 'Man City 0-0 Brentford', minute: 10, prediction: 'Man City -1.5 @ 1.91', confidence: 74 },
   { sport: '⚽', league: 'Bundesliga', match: 'Dortmund 2-1 RB Leipzig', minute: 72, prediction: 'Over 3.5 Goals @ 2.10', confidence: 63 },
   { sport: '🏀', league: 'NBA', match: 'Thunder 98-92 Mavericks', quarter: 3, prediction: 'Thunder -3.5 @ 1.95', confidence: 74 },
