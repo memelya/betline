@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>BetLine — AI-аналитика спортивных ставок</title>
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='8' fill='%230a0a0f'/%3E%3Ctext x='16' y='23' text-anchor='middle' font-size='20' font-weight='bold' fill='%23fdcb6e' font-family='sans-serif'%3EB%3C/text%3E%3C/svg%3E" />
+  <script type="module" src="/src/main.js"></script>
+</head>
+<body>
+  <header class="topbar">
+    <div class="topbar__inner">
+      <div class="topbar__logo">◆ Bet<span class="c-accent">Line</span></div>
+      <nav class="topbar__nav">
+        <button class="topbar__btn active" data-tab="dashboard">📊 Дашборд</button>
+        <button class="topbar__btn" data-tab="bets">🎯 Ставки</button>
+        <button class="topbar__btn" data-tab="predictions">🔮 Прогнозы</button>
+        <button class="topbar__btn" data-tab="live">⚡ Live</button>
+        <button class="topbar__btn" data-tab="stats">📈 ROI</button>
+      </nav>
+    </div>
+  </header>
+  <main id="app"></main>
+
+  <style>
+    *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+    body{font-family:system-ui,-apple-system,sans-serif;background:#0a0a0f;color:#e4e4e7}
+    .c-accent{color:#fdcb6e}
+    .topbar{position:fixed;top:0;left:0;right:0;z-index:100;background:rgba(10,10,15,0.95);border-bottom:1px solid rgba(255,255,255,0.06)}
+    .topbar__inner{display:flex;align-items:center;gap:24px;max-width:1200px;margin:0 auto;padding:0 16px;height:56px}
+    .topbar__logo{font-weight:700;font-size:16px;white-space:nowrap}
+    .topbar__nav{display:flex;gap:4px;overflow-x:auto}
+    .topbar__btn{background:none;border:none;color:#a1a1aa;padding:6px 12px;border-radius:6px;font-size:13px;cursor:pointer;white-space:nowrap;transition:all .15s;font-family:inherit}
+    .topbar__btn:hover{color:#fff;background:rgba(255,255,255,0.04)}
+    .topbar__btn.active{color:#fff;background:rgba(253,203,110,0.12)}
+    #app{padding-top:56px;min-height:100vh}
+    .view{max-width:1200px;margin:0 auto;padding:24px 16px}
+    .view h2{font-size:22px;font-weight:700;margin-bottom:4px}
+    .view p{color:#a1a1aa;margin-bottom:24px}
+    .cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:12px;margin-bottom:24px}
+    .card{background:rgba(255,255,255,0.02);border:1px solid rgba(255,255,255,0.06);border-radius:10px;padding:16px}
+    .card--hl{background:linear-gradient(135deg,rgba(253,203,110,0.06),rgba(108,92,231,0.03));border-color:rgba(253,203,110,0.2)}
+    .card__l{font-size:11px;text-transform:uppercase;letter-spacing:.5px;color:#a1a1aa;font-weight:600;margin-bottom:6px}
+    .card__v{font-size:26px;font-weight:800;font-family:'Courier New',monospace}
+    .card__v--up{color:#55efc4}
+    .card__v--dn{color:#e17055}
+    .card__t{font-size:11px;color:#a1a1aa;margin-top:4px}
+    .card__t--up::before{content:"▲ ";color:#55efc4}
+    .card__t--dn::before{content:"▼ ";color:#e17055}
+    .grid-2{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:24px}
+    .block{background:rgba(255,255,255,0.02);border:1px solid rgba(255,255,255,0.06);border-radius:10px;padding:16px}
+    .block__h{font-size:14px;font-weight:600;margin-bottom:12px;display:flex;justify-content:space-between}
+    .block__h span{font-size:11px;color:#fdcb6e;background:rgba(253,203,110,0.1);padding:2px 8px;border-radius:100px}
+    .bet-item{padding:12px;border-bottom:1px solid rgba(255,255,255,0.04);display:flex;align-items:center;gap:10px}
+    .bet-item:last-child{border-bottom:none}
+    .bet-item:hover{background:rgba(255,255,255,0.01)}
+    .bet-icon{font-size:18px;flex-shrink:0}
+    .bet-info{flex:1}
+    .bet-info .name{font-size:14px;font-weight:600}
+    .bet-info .detail{font-size:12px;color:#a1a1aa}
+    .bet-status{font-size:12px;font-weight:700;padding:3px 8px;border-radius:100px;flex-shrink:0}
+    .bet-status--win{background:rgba(85,239,196,0.1);color:#55efc4}
+    .bet-status--lose{background:rgba(225,112,85,0.1);color:#e17055}
+    .bet-status--pending{background:rgba(253,203,110,0.1);color:#fdcb6e}
+    .bet-amount{font-family:monospace;font-weight:700;font-size:13px;text-align:right;flex-shrink:0}
+    .bet-amount--win{color:#55efc4}
+    .bet-amount--lose{color:#e17055}
+    .bet-amount--pending{color:#fdcb6e}
+    .pred-item{padding:14px;border:1px solid rgba(255,255,255,0.06);border-radius:8px;margin-bottom:10px;cursor:pointer;transition:all.2s}
+    .pred-item:hover{border-color:rgba(253,203,110,0.3)}
+    .pred-h{display:flex;justify-content:space-between;align-items:center;margin-bottom:6px}
+    .pred-h .sport-tag{font-size:10px;padding:2px 8px;border-radius:100px;background:rgba(108,92,231,0.1);color:#a29bfe}
+    .pred-m{font-size:13px;color:#a1a1aa}
+    .pred-f{display:flex;justify-content:space-between;margin-top:8px;padding-top:8px;border-top:1px solid rgba(255,255,255,0.04)}
+    .pred-f .odds{font-family:monospace;font-weight:700;color:#fdcb6e}
+    .pred-f .confidence{font-family:monospace;font-weight:700}
+    .pred-f .confidence--h{color:#55efc4}
+    .pred-f .confidence--m{color:#fdcb6e}
+    .pred-f .confidence--l{color:#e17055}
+    .stat-row{display:flex;justify-content:space-between;padding:8px 0;border-bottom:1px solid rgba(255,255,255,0.04);font-size:13px}
+    .stat-row:last-child{border-bottom:none}
+    .stat-row .l{color:#a1a1aa}
+    .stat-row .v{font-weight:700;font-family:monospace}
+    .stat-row .v--p{color:#55efc4}
+    .stat-row .v--n{color:#e17055}
+    .bar{height:8px;border-radius:4px;background:rgba(255,255,255,0.06);overflow:hidden;margin:4px 0}
+    .bar__fill{height:100%;border-radius:4px;transition:width.3s}
+    .live-item{display:flex;align-items:center;gap:12px;padding:12px;border-radius:8px;background:rgba(253,203,110,0.03);border:1px solid rgba(253,203,110,0.1);margin-bottom:8px}
+    .live-dot{width:8px;height:8px;border-radius:50%;background:#55efc4;animation:pulse 1.5s infinite;flex-shrink:0}
+    @keyframes pulse{0%{opacity:1}50%{opacity:0.3}100%{opacity:1}}
+    @media(max-width:768px){.grid-2{grid-template-columns:1fr}}
+  </style>
+</body>
+</html>
