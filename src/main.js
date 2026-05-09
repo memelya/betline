@@ -13,18 +13,23 @@ const BETS = [
   { id: 4, sport: '⚽', league: 'UCL', match: 'Real Madrid vs Bayern', pick: 'Both Teams to Score', odds: 1.85, stake: 250, result: 'win', profit: 462.5, date: '2026-05-07' },
   { id: 5, sport: '🏀', league: 'NBA', match: 'Warriors vs Nuggets', pick: 'Nuggets -4.5', odds: 2.10, stake: 120, result: 'pending', profit: 0, date: '2026-05-09' },
   { id: 6, sport: '⚽', league: 'Serie A', match: 'Inter vs Milan', pick: 'Over 2.5 Goals', odds: 1.95, stake: 180, result: 'pending', profit: 0, date: '2026-05-09' },
-  { id: 7, sport: '🏎️', league: 'F1', match: 'Miami GP', pick: 'Verstappen Win', odds: 1.45, stake: 300, result: 'pending', profit: 0, date: '2026-05-11' },
+  { id: 7, sport: '⚽', league: 'EPL', match: 'Sunderland vs Man United', pick: 'Man United Win', odds: 1.85, stake: 250, result: 'pending', profit: 0, date: '2026-05-09' },
+  { id: 8, sport: '⚽', league: 'EPL', match: 'Man City vs Brentford', pick: 'Man City -1.5', odds: 1.91, stake: 300, result: 'pending', profit: 0, date: '2026-05-09' },
+  { id: 9, sport: '🏎️', league: 'F1', match: 'Miami GP', pick: 'Verstappen Win', odds: 1.45, stake: 300, result: 'pending', profit: 0, date: '2026-05-11' },
 ];
 
 const PREDICTIONS = [
-  { id: 1, sport: '⚽', league: 'EPL', match: 'Arsenal vs Tottenham', pick: 'Arsenal Win', odds: 1.80, confidence: 78, analysis: 'Арсенал дома, потеря Тоттенхэмом ключевого защитника, xG Arsenal 2.1 vs 1.2' },
-  { id: 2, sport: '🎾', league: 'ATP RG', match: 'Djokovic vs Alcaraz', pick: 'Djokovic +3.5 Games', odds: 1.91, confidence: 65, analysis: 'Джокович набирает форму, на грунте historical edge, Alcaraz после травмы' },
-  { id: 3, sport: '🏀', league: 'NBA', match: 'Bucks vs Celtics', pick: 'Under 224.5', odds: 1.87, confidence: 71, analysis: 'Обе команды в топ-5 защиты, последние 5 встреч — 3 under' },
-  { id: 4, sport: '⚽', league: 'UCL', match: 'PSG vs Dortmund', pick: 'PSG Win & Over 2.5', odds: 2.20, confidence: 59, analysis: 'ПСЖ дома в плей-офф, но Дортмунд непредсказуем. Риск выше' },
-  { id: 5, sport: '🏎️', league: 'F1', match: 'Monaco GP', pick: 'Leclerc Top 3', odds: 1.65, confidence: 82, analysis: 'Легко — король Монако. 3 поула подряд, 2 победы. Полюс точно.' },
+  { id: 1, sport: '⚽', league: 'EPL', match: 'Sunderland vs Man United', pick: 'Man United Win (-0.5)', odds: 1.85, confidence: 68, analysis: 'МЮ в форме (3W-1D-1L), обыграли Ливерпуль и Челси. Сандерленд нестабилен: 0-5 от Ноттингема. Фора -0.5 — букмекеры ждут победу МЮ.' },
+  { id: 2, sport: '⚽', league: 'EPL', match: 'Man City vs Brentford', pick: 'Man City -1.5', odds: 1.91, confidence: 74, analysis: 'Сити дома — 4 матча без поражений (Арсенал, Челси). Брентфорд — 4 матча без побед. Фора -1.5 оправдана, как в матче с Сандерлендом (3-0).' },
+  { id: 3, sport: '⚽', league: 'EPL', match: 'Arsenal vs Tottenham', pick: 'Arsenal Win', odds: 1.80, confidence: 78, analysis: 'Арсенал дома, потеря Тоттенхэмом ключевого защитника, xG Arsenal 2.1 vs 1.2' },
+  { id: 4, sport: '🎾', league: 'ATP RG', match: 'Djokovic vs Alcaraz', pick: 'Djokovic +3.5 Games', odds: 1.91, confidence: 65, analysis: 'Джокович набирает форму, на грунте historical edge, Alcaraz после травмы' },
+  { id: 5, sport: '🏀', league: 'NBA', match: 'Bucks vs Celtics', pick: 'Under 224.5', odds: 1.87, confidence: 71, analysis: 'Обе команды в топ-5 защиты, последние 5 встреч — 3 under' },
+  { id: 6, sport: '🏎️', league: 'F1', match: 'Monaco GP', pick: 'Leclerc Top 3', odds: 1.65, confidence: 82, analysis: 'Король Монако. 3 поула подряд, 2 победы. Полюс практически гарантирован.' },
 ];
 
 const LIVE = [
+  { sport: '⚽', league: 'EPL', match: 'Sunderland 0-0 Man United', minute: 10, prediction: 'Man United Win @ 1.85', confidence: 68 },
+  { sport: '⚽', league: 'EPL', match: 'Man City 0-0 Brentford', minute: 10, prediction: 'Man City -1.5 @ 1.91', confidence: 74 },
   { sport: '⚽', league: 'Bundesliga', match: 'Dortmund 2-1 RB Leipzig', minute: 72, prediction: 'Over 3.5 Goals @ 2.10', confidence: 63 },
   { sport: '🏀', league: 'NBA', match: 'Thunder 98-92 Mavericks', quarter: 3, prediction: 'Thunder -3.5 @ 1.95', confidence: 74 },
   { sport: '🎾', league: 'ATP Rome', match: 'Medvedev — Rublev', set: '2nd', prediction: 'Medvedev Win @ 1.53', confidence: 81 },
